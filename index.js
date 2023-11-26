@@ -10,22 +10,22 @@ import puppeteer from "puppeteer"
   const page = await browser.newPage()
 
   // Navegar por la página a una URL ej https://developer.chrome.com/
-  // await page.goto("https://developer.chrome.com/")
   // await page.goto("https://www.amazon.es/")  // aveces cokies, otras imagen
-  await page.goto("https://developer.chrome.com/")
+  // await page.goto("https://developer.chrome.com/")
+  await page.goto("https://www.google.cl/")
 
   // captura de pantalla
   // await page.screenshot({ path: 'amazon1.jpg' })
-  // await page.screenshot({ path: 'amazon3.jpg' })
-  // await page.screenshot({ path: "amazon5.jpg" }) // uso de cookies (aceptar)
-  // await page.screenshot({ path: "amazon6.jpg" })
-  await page.screenshot({ path: "chrome8.jpg" })
+  // await page.screenshot({ path: "chrome8.jpg" })
+  
+    // Escribe en el cuadro de búsqueda
+  // await page.type(".search-box__input", "automate beyond recorder")
+  await page.type("#APjFqb", "automate beyond recorder")
+  await page.screenshot({ path: "google11.jpg" })
+  
 
   // Establecer tamaño de pantalla
   // await page.setViewport({ width: 1080, height: 1024 })
-
-  // Escribe en el cuadro de búsqueda
-  // await page.type(".search-box__input", "automate beyond recorder")
 
   //Espere y haga clic en el primer resultado.
   /*   const searchResultSelector = ".search-box__link"
