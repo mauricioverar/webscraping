@@ -1,3 +1,6 @@
+// npm i fs-extra
+import fs from "fs-extra"
+
 import puppeteer from "puppeteer"
 ;(async () => {
   try {
@@ -11,16 +14,16 @@ import puppeteer from "puppeteer"
 
     const page = await browser.newPage()
 
-    console.log('entrando a google...')
+    console.log("entrando a google...")
     await page.goto("https://www.google.cl/")
 
     // Establecer tamaño de pantalla
     await page.setViewport({ width: 1080, height: 1024 })
 
     // captura de pantalla
-    console.log('capturando pantalla del buscador')
+    console.log("capturando pantalla del buscador")
     await page.screenshot({ path: "imagenes/google17.jpg" })
-    
+
     await page.type("#APjFqb", "incubadora desafio")
     console.log("capturando pantalla de búsqueda")
     await page.screenshot({ path: "imagenes/google18.jpg" })
@@ -29,12 +32,12 @@ import puppeteer from "puppeteer"
     await page.click(".gNO89b") //google
     console.log("haciendo clic en buscar")
     await page.waitForSelector("[data-snc=ih6Jnb_PcjQmf]") //google  esperar la carga del componente q contiene link a
-    console.log('esperando resultado de la búsqueda')
+    console.log("esperando resultado de la búsqueda")
     await page.screenshot({ path: "imagenes/google19.jpg" }) //
     console.log("capturando pantalla de resultado")
 
     // inspeccionar pagina
-    console.log('inspeccionando la página...')
+    console.log("inspeccionando la página...")
     const enlaces = await page.evaluate(() => {
       const elements = document.querySelectorAll(
         "[data-snc=ih6Jnb_PcjQmf] div div div span a"
@@ -49,7 +52,7 @@ import puppeteer from "puppeteer"
     console.log("enlaces encontrados: ", enlaces.length) // numero de enlaces
 
     const registros = []
-    console.log('recorriendo enlaces encontrados...')
+    console.log("recorriendo enlaces encontrados...")
     for (let enlace of enlaces) {
       await page.goto(enlace)
       await page.waitForSelector(".carreras-en-que-consiste") // esperar carga de esta clase
@@ -64,8 +67,14 @@ import puppeteer from "puppeteer"
       })
       registros.push(info)
     }
-    console.log('entregando información en Json')
+    console.log("entregando información en Json")
     console.log("registros: ", registros)
+
+    const datos = JSON.stringify(registros)
+
+    fs.writeFile(`archivos/archivo.json`, datos, "utf-8", () => {
+      //setTimeout(()=> { leer()}, 3000)
+    })
 
     await browser.close()
   } catch (error) {
